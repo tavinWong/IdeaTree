@@ -42,6 +42,7 @@
 
   <link rel="stylesheet" href="styles/main.css">
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
@@ -49,24 +50,36 @@
 
   <header>
       <div id="user-container">
-        <div id="user-pic"></div>
-        <div id="user-name"></div>
-        <button hidden id="sign-out" class="btn btn-danger">
-          Sign-out
+        <div class="row">
+          <div hidden id="user-pic" class="col-md-5"></div>
+          <div hidden id="user-name" class="col-md-5"></div>
+        </div>
+        <div class="row">
+          <button hidden id="sign-out" class="btn btn-danger">
+            Sign-out
+          </button>
+          <button id="sign-in" class="btn btn-primary btn-signin">
+          <i class="material-icons">account_circle</i> Sign-in
         </button>
-        <button id="sign-in" class="btn btn-primary btn-signin">
-          <i class="material-icons">account_circle</i>Sign-in with Google
-        </button>
+        </div>
       </div>
   </header>
 
 
   <div id="mapid"></div>
 
-
+  <div class="idea-input">
+    <div class="input-group container">
+      <input type="text" class="form-control" placeholder="What's your idea with this seed?">
+      <span class="input-group-btn">
+        <button class="btn btn-secondary" type="button">Plant here!</button>
+      </span>
+    </div>
+  </div>
 
 
 <script src="scripts/main.js"></script>
+<script src="scripts/chatbase.js"></script>
 </body>
 
 <script src="https://www.gstatic.com/firebasejs/3.5.0/firebase.js"></script>

@@ -1,7 +1,16 @@
 'use strict'
 
 function chatbase(){
-	this.checkSetup();
+	this.checkSetup(); //this refers to chatbase object
+
+	this.signInButton = document.getElementById('sign-in');
+	this.signInButton.addEventListener('click', this.signIn.bind(this));
+	this.signOutButton = document.getElementById('sign-out');
+	this.signOutButton.addEventListener('click', this.signOut.bind(this));
+
+	//user info 
+  	this.userPic = document.getElementById('user-pic');
+  	this.userName = document.getElementById('user-name');
 
 	this.initFirebase();
 }
