@@ -1,0 +1,22 @@
+{
+  "seeds" : {
+    "-K2ib4H77rj0LYewF7dP" : {
+      "text" : "Hello",
+      "name" : "anonymous",
+      "lat" : 0.0001,
+      "lng" : 0.0001
+    },
+    "-K2ib5JHRbbL0NrztUfO" : {
+      "text" : "How are you",
+      "name" : "anonymous",
+      "lat" : 0.0002,
+      "lng" : 0.0002
+    },
+    "-K2ib62mjHh34CAUbide" : {
+      "text" : "I am fine",
+      "name" : "anonymous",
+      "lat" : 0.0003,
+      "lng" : 0.0003
+    }
+  }
+}

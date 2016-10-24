@@ -1,5 +1,6 @@
 'use strict'
 
+
 function chatbase(){
 	this.checkSetup(); //this refers to chatbase object
 
@@ -8,11 +9,16 @@ function chatbase(){
 	this.signOutButton = document.getElementById('sign-out');
 	this.signOutButton.addEventListener('click', this.signOut.bind(this));
 
+  this.messageInput = document.getElementById('message');
+  this.ideaSent = document.getElementById('ideaSent');
+  this.ideaSent.addEventListener('click', this.saveMessage.bind(this));
+
 	//user info 
   	this.userPic = document.getElementById('user-pic');
   	this.userName = document.getElementById('user-name');
 
 	this.initFirebase();
+  this.loadSeeds();
 }
 
 chatbase.prototype.initFirebase = function() {
@@ -22,6 +28,22 @@ chatbase.prototype.initFirebase = function() {
   this.storage = firebase.storage();
   // Initiates Firebase auth and listen to auth state changes.
   this.auth.onAuthStateChanged(this.onAuthStateChanged.bind(this));
+};
+
+chatbase.prototype.loadSeeds = function() {
+  // Reference to the /messages/ database path.
+  this.seedsRef = this.database.ref('seeds');
+  // Make sure we remove all previous listeners.
+  this.seedsRef.off();
+
+  /** load seeds
+  var setMessage = function(data) {
+    var val = data.val();
+    this.displayMessage(data.key, val.name, val.text, val.photoUrl, val.imageUrl);
+  }.bind(this);
+  this.messagesRef.limitToLast(12).on('child_added', setMessage);
+  this.messagesRef.limitToLast(12).on('child_changed', setMessage);
+  **/
 };
 
 /**--------------------------------------signIn/out App---------------------------------**/
@@ -54,7 +76,7 @@ chatbase.prototype.onAuthStateChanged = function(user) {
     this.signInButton.setAttribute('hidden', 'true');
 
     // We load currently existing chant messages.
-    this.loadMessages();
+    this.loadSeeds();
   } else { // User is signed out!
     // Hide user's profile and sign-out button.
     this.userName.setAttribute('hidden', 'true');
@@ -82,6 +104,32 @@ chatbase.prototype.checkSignedInWithMessage = function() {
   return false;
 };
 /**--------------------------------------END signIn/out App---------------------------------**/
+
+chatbase.prototype.saveMessage = function(e) {
+  e.preventDefault();
+  alert('saving message...');
+  if (this.messageInput.value && this.checkSignedInWithMessage()) {
+    var currentUser = this.auth.currentUser;
+
+    this.seedsRef.push({
+      name: currentUser.displayName,
+      text: this.messageInput.value,
+      lat: latTemp,
+      lng: lngTemp
+    }).then(function() {
+      // Clear message text field and SEND button state.
+      this.messageInput.value = '';
+
+    }.bind(this)).catch(function(error) {
+      console.error('Error writing new message to Firebase Database', error);
+    });
+  }
+};
+
+chatbase.resetTextfield = function(element) {
+  element.value = '';
+  //element.parentNode.MaterialTextfield.boundUpdateClassesHandler();
+};
 
 chatbase.prototype.checkSetup = function(){
   if (!window.firebase || !(firebase.app instanceof Function) || !window.config) {
