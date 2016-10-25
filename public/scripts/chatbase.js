@@ -107,10 +107,21 @@ chatbase.prototype.checkSignedInWithMessage = function() {
 
 chatbase.prototype.saveMessage = function(e) {
   e.preventDefault();
-  alert('saving message...');
+  //change temp position
+  navigator.geolocation.getCurrentPosition(success, error, options);
+
+};
+/**
+chatbase.prototype.success = function(pos) {
+  var crd = pos.coords;
+console.log('pass');
+  latTemp = crd.latitude;
+  lngTemp = crd.longitude;
+  console.log('Latitude : ' + crd.latitude);
+  console.log('Longitude: ' + crd.longitude);
+
   if (this.messageInput.value && this.checkSignedInWithMessage()) {
     var currentUser = this.auth.currentUser;
-
     this.seedsRef.push({
       name: currentUser.displayName,
       text: this.messageInput.value,
@@ -124,7 +135,20 @@ chatbase.prototype.saveMessage = function(e) {
       console.error('Error writing new message to Firebase Database', error);
     });
   }
+
+
 };
+
+chatbase.prototype.error = function(err) {
+  console.log('error');
+  alert('ERROR(' + err.code + '): ' + err.message);
+};
+**/
+
+chatbase.prototype.changeTempLocation = function(position){
+  lngTemp = position.coords.longitude; 
+  latTemp = position.coords.latitude;
+}
 
 chatbase.resetTextfield = function(element) {
   element.value = '';
