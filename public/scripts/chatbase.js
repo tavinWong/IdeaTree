@@ -36,6 +36,21 @@ chatbase.prototype.loadSeeds = function() {
   // Make sure we remove all previous listeners.
   this.seedsRef.off();
 
+  var setPlant = function(data) {
+
+    var name = data.child("name").val();
+    var text = data.child("text").val();
+    var lat = data.child("lat").val();
+    var lng = data.child("lng").val();
+
+    console.log(lat);
+    //plant seed
+    L.marker([lat, lng], {icon: seedIcon1}).addTo(mymap).bindPopup(text+" by " + name);
+  }.bind(this);
+
+  this.seedsRef.on('child_added', setPlant);
+
+
   /** load seeds
   var setMessage = function(data) {
     var val = data.val();
@@ -111,6 +126,7 @@ chatbase.prototype.saveMessage = function(e) {
   navigator.geolocation.getCurrentPosition(success, error, options);
 
 };
+
 /**
 chatbase.prototype.success = function(pos) {
   var crd = pos.coords;
